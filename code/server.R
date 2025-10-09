@@ -1,18 +1,16 @@
 library(shiny)
-library(shinyBS)
 library(RColorBrewer)
 library(ggplot2)
 library(png)
 library(dplyr)
 library(tidyr)
 library(plotly)
-library(shinyjs)
 library(htmlwidgets)
 library(DT)
-library(readxl)
 library(data.table)
 library(tibble)
 library(cowplot)
+library(Seurat)
 #Specify user-ids and passwords
 auth=read.csv("data/authentication.csv")
 my_username <- auth$user
@@ -21,10 +19,12 @@ my_password <- auth$pwd
 server <- function(input, output, session) {
   
   #### Authentication ####
+  #creates a reactive values object named values with a single field called authenticated, which is initially set to FALSE
+  #will cause any UI or outputs to update automatically.
   values <- reactiveValues(authenticated = FALSE)
   
-  # Return the UI for a modal dialog with data selection input. If 'failed'
-  # is TRUE, then display a message that the previous value was invalid.
+  # modal dialog a window in a user interface that creates a temporary, focused state, forcing the user to interact with it before returning to the parent application
+  #Return the UI for a modal dialog with data selection input.
   dataModal <- function(failed = FALSE) {
     modalDialog(
       textInput("username", "Username:"),
@@ -35,16 +35,17 @@ server <- function(input, output, session) {
     )
   }
   
-  # Show modal when button is clicked.
+  # showModal() in Shiny displays a modal (popup) dialog on the app's interface
   # This `observe` is suspended only whith right user credential
-  
+  #observer monitors reactive values or inputs, and executes code automatically when those values change.
+  #Whenever these inputs change, do this."
   obs1 <- observe({
     showModal(dataModal())
   })
   
   # When OK button is pressed, attempt to authenticate. If successful,
   # remove the modal.
-  
+  #isolate() lets you access a reactive value without making your code re-run when that value changes.
   obs2 <- observe({
     req(input$ok)
     isolate({
@@ -160,10 +161,10 @@ server <- function(input, output, session) {
   #function to download dot plot
   output$downloaddotplot <- downloadHandler(
     filename = function() {
-      paste0(input$projects, '_dotplot.jpg', sep='') 
+      paste0(input$projects2, '_dotplot.jpg', sep='') 
     },
     content = function(file){
-      jpeg(file, quality = 100, width = 800, height = 800)
+      jpeg(file, quality = 100, width = 1200, height = 800)
       plot(dotplot_out())
       dev.off()
     })
@@ -207,6 +208,11 @@ server <- function(input, output, session) {
     volcanoplot_out()
   })
   
+  output$dwld <- downloadHandler(
+    filename = function() { paste(input$projects2,'_',input$contrast, '_deg.csv', sep='') },
+    content = function(file) {
+      write.csv(datasetInput(), file)
+    })
 
   #### Tab 2 for single cell data ####
   

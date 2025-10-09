@@ -1,13 +1,13 @@
 library(shiny)
-library(shinyBS)
+#library(shinyBS)
 library(plotly)
 library(shinyjs)
-library(shinydashboard)
+library(shinydashboard) 
 library(shinyWidgets)
 library(shinythemes)
 
 ui <- fluidPage(theme = shinytheme("sandstone"),
-                useShinydashboard(), #This is important to enable you to use shiny dashboard functions
+                useShinydashboard(), #This is important to enable you to use shiny dashboard functions.you can quickly create a clean, structured dashboard UI
            navbarPage("Shiny Tutorial", #Creates a page with a top navigation bar
                  tabPanel("About", #Used to create individual tabs
                           box( #Creates a box enclosing UI elements
