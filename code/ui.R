@@ -25,7 +25,13 @@ ui <- fluidPage(theme = shinytheme("sandstone"),
                               tags$li(tags$a(href = "https://rstudio.github.io/shinydashboard/", "Shiny Dashboard")),
                               tags$li(tags$a(href = "https://rstudio.github.io/shinythemes/","Shiny Themes")),
                             ),
-                            br()
+                           br(),br(),
+                           h4(p(div("Data for tutorial"))),
+                           tags$ul( # Unordered list for bullet points
+                              tags$li(tags$a(href = "http://franklin.research.chop.edu:3838/shiny-tutorial_V2/data/TALL_object.rds", "TALL_object.rds")),
+                              tags$li(tags$a(href = "http://franklin.research.chop.edu:3838/shiny-tutorial_V2/data/pbmc_10k_v3_updated.rds", "pbmc_10k_v3_updated.rds")),
+                          )
+
                           )),
                  #Second tab
                           tabPanel("Bulk RNA-Seq data",
