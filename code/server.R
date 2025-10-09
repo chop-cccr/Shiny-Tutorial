@@ -226,7 +226,7 @@ server <- function(input, output, session) {
   #Load file
   fileload <- reactive({
     if(input$filetype == 'list'){
-      inFile = paste('data/',as.character(input$projects),'.RDS',sep = '')
+      inFile = paste('data/',as.character(input$projects),'.rds',sep = '')
         scrna=readRDS(inFile)
     }else{
       file=input$rdatafileupload
