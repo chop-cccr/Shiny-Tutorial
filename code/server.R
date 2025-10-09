@@ -101,7 +101,7 @@ server <- function(input, output, session) {
       inFile = paste('data/',as.character(input$projects2),'.rds',sep = '')
       results=readRDS(inFile)
     }else{
-      file=input$rdatafileupload
+      file=input$rdatafileupload2
       results=readRDS(file$datapath)
     }
     return(results)
